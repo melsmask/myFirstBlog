@@ -1,7 +1,17 @@
 services:
   web:
-    image: php:8.2-apache
+    image: webdevops/php-apache:8.4
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html
+      - ./src:/app
+    env_file:
+      - .env
+  db:
+    image: mariadb:12.0.2
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
